@@ -102,7 +102,8 @@ blocks:
       transform_data:
         table_name: ''
     use_raw_sql: false
-  downstream_blocks: []
+  downstream_blocks:
+  - fetch_data_from_db
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -115,6 +116,51 @@ blocks:
   upstream_blocks:
   - deduplicate
   uuid: write_to_duckdb
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: duckdb
+    data_provider_profile: default
+    data_provider_schema: main
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: replace
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks:
+  - data_profiling
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: fetch_data_from_db
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - write_to_duckdb
+  uuid: fetch_data_from_db
+- all_upstream_blocks_executed: false
+  color: teal
+  configuration:
+    data_provider: duckdb
+    data_provider_profile: default
+    data_provider_schema: main
+    export_write_policy: replace
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: data_profiling
+  retry_config: null
+  status: executed
+  timeout: null
+  type: custom
+  upstream_blocks:
+  - fetch_data_from_db
+  uuid: data_profiling
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
@@ -137,5 +183,5 @@ spark_config: {}
 tags: []
 type: python
 uuid: api_to_duckdb
-variables_dir: /home/src/mage_data/etl-demo
+variables_dir: /home/src/mage_data/etl-test
 widgets: []
