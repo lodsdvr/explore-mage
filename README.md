@@ -22,7 +22,7 @@ Windows:
 ```bash
 git clone https://github.com/lodsdvr/explore-mage ota-etl-test
 cd ota-etl-test
-cp dev.env .env
-rm dev.env
+copy dev.env .env
+del dev.env
 docker compose up
 ```
