@@ -26,8 +26,21 @@ copy dev.env .env
 del dev.env
 docker compose up
 ```
-
 2. Ensure the docker container is running either in the Docker Desktop or the terminal where you run the command above.
+
+❗⚠️ **Had to install a 3rd party dependency manually in the docker container since the requirements file doesn't seem to work** ⚠️❗
+
+Windows:
+```bash
+docker exec -it ota-etl-test-magic-1 bash
+```
+***This will enter command line of the environment***
+```bash
+cd etl-test
+pip install -r requirements.txt
+```
+**Wait until it finishes installation before proceeding with the next steps below**
+
 3. Open http://localhost:6789 in your local web browser, you will land in the Pipelines screen.
 4. Click the api_to_duck_db name link, it will lead you to the Triggers screen.
 5. Click the Run@once button, wait for the run to be completed successfully.
