@@ -1,0 +1,141 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - transform_data
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: load_data_from_api
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: load_data_from_api
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - exclude_rows
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: transform_data
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - load_data_from_api
+  uuid: transform_data
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - fill_missing_values
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: exclude_rows
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - transform_data
+  uuid: exclude_rows
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: duckdb
+    data_provider_profile: default
+    data_provider_schema: magic
+    export_write_policy: replace
+  downstream_blocks:
+  - deduplicate
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: fill_missing_values
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - exclude_rows
+  uuid: fill_missing_values
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - write_to_duckdb
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: deduplicate
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - fill_missing_values
+  uuid: deduplicate
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: duckdb
+    data_provider_profile: default
+    data_provider_schema: main
+    data_provider_table: covid_19_daily_reports
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: replace
+    limit: 1000
+    upstream_block_configuration:
+      transform_data:
+        table_name: ''
+    use_raw_sql: false
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: write_to_duckdb
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - deduplicate
+  uuid: write_to_duckdb
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2023-10-05 18:06:06.611144+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: api_to_duckdb
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: api_to_duckdb
+variables_dir: /home/src/mage_data/etl-demo
+widgets: []
